@@ -1,0 +1,42 @@
+===============
+DEVCOIN INSTALL
+===============
+
+
+In this directory are some files that you need to have in
+the "currenct directory" when you run devcoind, devcoin,
+or devcoin-qt
+
+The files that must be in the current directory at runtime
+are the receiver_*.csv files.
+
+This program uses boost and curl, you will need the
+development header files of both to compile it and the
+rutime libraries of both to run it.
+
+It also uses Berkeley DB database, you are always free
+to upgrade to newest version but cannot downgrade existing
+databases such as wallets back to an older version.
+
+
+----------
+COMPILING:
+----------
+
+You need to be in the subdirectory named src to do
+the compile.
+
+To make without UPNP:
+
+make -f makefile.whatever USE_UPNP= bitcoind
+
+
+To make without UPNP activated:
+
+make -f makefile.whatever USE_UPNP=1 bitcoind
+
+
+Once it has made bitcoind one usually strips it to save disk
+space and renames it to devcoind
+
+
