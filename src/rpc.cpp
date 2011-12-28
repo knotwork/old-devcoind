@@ -1884,7 +1884,6 @@ pair<string, rpcfn_type> pCallTable[] =
 {
     make_pair("help",                  &help),
     make_pair("stop",                  &stop),
-    make_pair("getblock",                     &getblock),
     make_pair("getblockbycount",        &getblockbycount),
     make_pair("getblockbyhash",         &getblockbyhash),
     make_pair("getblockcount",         &getblockcount),
