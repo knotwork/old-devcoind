@@ -1295,12 +1295,12 @@ int GetAuxPowStartBlock()
     if (fTestNet)
         return 0; // Always on testnet
     else
-        return 45000; // Never on prodnet
+        return 25000; // Never on prodnet
 }
 
 int GetOurChainID()
 {
-    return 0x0003;
+    return 0x0004;
 }
  
 bool CBlock::CheckProofOfWork(int nHeight) const
