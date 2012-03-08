@@ -62,7 +62,7 @@ void PrintConsole(const char* format, ...)
     }
     printf("%s", buffer);
 #if defined(__WXMSW__) && defined(GUI)
-    MyMessageBox(buffer, "Bitcoin", wxOK | wxICON_EXCLAMATION);
+    MyMessageBox(buffer, "Devcoin", wxOK | wxICON_EXCLAMATION);
 #else
     fprintf(stdout, "%s", buffer);
 #endif
@@ -161,11 +161,11 @@ Value stop(const Array& params, bool fHelp)
     if (fHelp || params.size() != 0)
         throw runtime_error(
             "stop\n"
-            "Stop bitcoin server.");
+            "Stop devcoin server.");
 
     // Shutdown will take long enough that the response should get back
     CreateThread(Shutdown, NULL);
-    return "bitcoin server stopping";
+    return "devcoin server stopping";
 }
 
 
@@ -461,7 +461,7 @@ Value getnewaddress(const Array& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw runtime_error(
             "getnewaddress [account]\n"
-            "Returns a new bitcoin address for receiving payments.  "
+            "Returns a new devcoin address for receiving payments.  "
             "If [account] is specified (recommended), it is added to the address book "
             "so payments received with the address will be credited to [account].");
 
@@ -528,7 +528,7 @@ Value getaccountaddress(const Array& params, bool fHelp)
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getaccountaddress <account>\n"
-            "Returns the current bitcoin address for receiving payments to this account.");
+            "Returns the current devcoin address for receiving payments to this account.");
 
     // Parse the account first so we don't generate a key if there's an error
     string strAccount = AccountFromValue(params[0]);
@@ -551,14 +551,14 @@ Value setaccount(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
-            "setaccount <bitcoinaddress> <account>\n"
+            "setaccount <devcoinaddress> <account>\n"
             "Sets the account associated with the given address.");
 
     string strAddress = params[0].get_str();
     uint160 hash160;
     bool isValid = AddressToHash160(strAddress, hash160);
     if (!isValid)
-        throw JSONRPCError(-5, "Invalid bitcoin address");
+        throw JSONRPCError(-5, "Invalid devcoin address");
 
 
     string strAccount;
@@ -588,7 +588,7 @@ Value getaccount(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "getaccount <bitcoinaddress>\n"
+            "getaccount <devcoinaddress>\n"
             "Returns the account associated with the given address.");
 
     string strAddress = params[0].get_str();
@@ -653,7 +653,7 @@ Value sendtoaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 2 || params.size() > 4)
         throw runtime_error(
-            "sendtoaddress <bitcoinaddress> <amount> [comment] [comment-to]\n"
+            "sendtoaddress <devcoinaddress> <amount> [comment] [comment-to]\n"
             "<amount> is a real and is rounded to the nearest 0.00000001");
 
     string strAddress = params[0].get_str();
@@ -683,14 +683,14 @@ Value getreceivedbyaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
-            "getreceivedbyaddress <bitcoinaddress> [minconf=1]\n"
-            "Returns the total amount received by <bitcoinaddress> in transactions with at least [minconf] confirmations.");
+            "getreceivedbyaddress <devcoinaddress> [minconf=1]\n"
+            "Returns the total amount received by <devcoinaddress> in transactions with at least [minconf] confirmations.");
 
     // Bitcoin address
     string strAddress = params[0].get_str();
     CScript scriptPubKey;
     if (!scriptPubKey.SetBitcoinAddress(strAddress))
-        throw JSONRPCError(-5, "Invalid bitcoin address");
+        throw JSONRPCError(-5, "Invalid devcoin address");
     if (!IsMine(*pwalletMain,scriptPubKey))
         return (double)0.0;
 
@@ -916,7 +916,7 @@ Value sendfrom(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() < 3 || params.size() > 6)
         throw runtime_error(
-            "sendfrom <fromaccount> <tobitcoinaddress> <amount> [minconf=1] [comment] [comment-to]\n"
+            "sendfrom <fromaccount> <todevcoinaddress> <amount> [minconf=1] [comment] [comment-to]\n"
             "<amount> is a real and is rounded to the nearest 0.00000001");
 
     string strAccount = AccountFromValue(params[0]);
@@ -983,7 +983,7 @@ Value sendmany(const Array& params, bool fHelp)
 
         CScript scriptPubKey;
         if (!scriptPubKey.SetBitcoinAddress(strAddress))
-            throw JSONRPCError(-5, string("Invalid bitcoin address:")+strAddress);
+            throw JSONRPCError(-5, string("Invalid devcoin address:")+strAddress);
         int64 nAmount = AmountFromValue(s.value_); 
         totalAmount += nAmount;
 
@@ -1426,8 +1426,8 @@ Value validateaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "validateaddress <bitcoinaddress>\n"
-            "Return information about <bitcoinaddress>.");
+            "validateaddress <devcoinaddress>\n"
+            "Return information about <devcoinaddress>.");
 
     string strAddress = params[0].get_str();
     uint160 hash160;
@@ -1465,10 +1465,10 @@ Value getwork(const Array& params, bool fHelp)
             "If [data] is specified, tries to solve the block and returns true if it was successful.");
 
     if (vNodes.empty())
-        throw JSONRPCError(-9, "Bitcoin is not connected!");
+        throw JSONRPCError(-9, "Devcoin is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(-10, "Bitcoin is downloading blocks...");
+        throw JSONRPCError(-10, "Devcoin is downloading blocks...");
 
     static map<uint256, pair<CBlock*, unsigned int> > mapNewBlock;
     static vector<CBlock*> vNewBlock;
@@ -1582,10 +1582,10 @@ Value getworkaux(const Array& params, bool fHelp)
             );
 
     if (vNodes.empty())
-        throw JSONRPCError(-9, "I0Coin is not connected!");
+        throw JSONRPCError(-9, "DeVCoin is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(-10, "I0Coin is downloading blocks...");
+        throw JSONRPCError(-10, "DeVCoin is downloading blocks...");
 
     static map<uint256, pair<CBlock*, unsigned int> > mapNewBlock;
     static vector<CBlock*> vNewBlock;
@@ -1744,10 +1744,10 @@ Value getauxblock(const Array& params, bool fHelp)
             "the aux proof of work and returns true if it was successful.");
 
     if (vNodes.empty())
-        throw JSONRPCError(-9, "I0Coin is not connected!");
+        throw JSONRPCError(-9, "DeVCoin is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(-10, "I0Coin is downloading blocks...");
+        throw JSONRPCError(-10, "DeVCoin is downloading blocks...");
 
     static map<uint256, CBlock*> mapNewBlock;
     static vector<CBlock*> vNewBlock;
@@ -1969,7 +1969,7 @@ string HTTPPost(const string& strMsg, const map<string,string>& mapRequestHeader
 {
     ostringstream s;
     s << "POST / HTTP/1.1\r\n"
-      << "User-Agent: bitcoin-json-rpc/" << FormatFullVersion() << "\r\n"
+      << "User-Agent: devcoin-json-rpc/" << FormatFullVersion() << "\r\n"
       << "Host: 127.0.0.1\r\n"
       << "Content-Type: application/json\r\n"
       << "Content-Length: " << strMsg.size() << "\r\n"
@@ -1999,7 +1999,7 @@ static string HTTPReply(int nStatus, const string& strMsg)
     if (nStatus == 401)
         return strprintf("HTTP/1.0 401 Authorization Required\r\n"
             "Date: %s\r\n"
-            "Server: bitcoin-json-rpc/%s\r\n"
+            "Server: devcoin-json-rpc/%s\r\n"
             "WWW-Authenticate: Basic realm=\"jsonrpc\"\r\n"
             "Content-Type: text/html\r\n"
             "Content-Length: 296\r\n"
@@ -2025,7 +2025,7 @@ static string HTTPReply(int nStatus, const string& strMsg)
             "Connection: close\r\n"
             "Content-Length: %d\r\n"
             "Content-Type: application/json\r\n"
-            "Server: bitcoin-json-rpc/%s\r\n"
+            "Server: devcoin-json-rpc/%s\r\n"
             "\r\n"
             "%s",
         nStatus,
@@ -2280,7 +2280,7 @@ void ThreadRPCServer2(void* parg)
 
     if (mapArgs["-rpcuser"] == "" && mapArgs["-rpcpassword"] == "")
     {
-        string strWhatAmI = "To use bitcoind";
+        string strWhatAmI = "To use devcoind";
         if (mapArgs.count("-server"))
             strWhatAmI = strprintf(_("To use the %s option"), "\"-server\"");
         else if (mapArgs.count("-daemon"))
@@ -2323,7 +2323,7 @@ void ThreadRPCServer2(void* parg)
     }
 #else
     if (fUseSSL)
-        throw runtime_error("-rpcssl=1, but bitcoin compiled without full openssl libraries.");
+        throw runtime_error("-rpcssl=1, but devcoin compiled without full openssl libraries.");
 #endif
 
     loop
@@ -2476,7 +2476,7 @@ Object CallRPC(const string& strMethod, const Array& params)
         throw runtime_error("couldn't connect to server");
 #else
     if (fUseSSL)
-        throw runtime_error("-rpcssl=1, but bitcoin compiled without full openssl libraries.");
+        throw runtime_error("-rpcssl=1, but devcoin compiled without full openssl libraries.");
 
     ip::tcp::iostream stream(GetArg("-rpcconnect", "127.0.0.1"), GetArg("-rpcport", "8332"));
     if (stream.fail())
@@ -2640,7 +2640,7 @@ int CommandLineRPC(int argc, char *argv[])
 #if defined(__WXMSW__) && defined(GUI)
         // Windows GUI apps can't print to command line,
         // so settle for a message box yuck
-        MyMessageBox(strPrint, "Bitcoin", wxOK);
+        MyMessageBox(strPrint, "Devcoin", wxOK);
 #else
         fprintf((nRet == 0 ? stdout : stderr), "%s\n", strPrint.c_str());
 #endif
