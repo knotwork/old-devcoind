@@ -72,7 +72,8 @@ void PrintConsole(const char* format, ...)
 int64 AmountFromValue(const Value& value)
 {
     double dAmount = value.get_real();
-    if (dAmount <= 0.0 || dAmount > 21000000.0)
+//    if (dAmount <= 0.0 || dAmount > 21000000.0)
+    if (dAmount <= 0.0 || dAmount > 21000000000.0)
         throw JSONRPCError(-3, "Invalid amount");
     int64 nAmount = roundint64(dAmount * COIN);
     if (!MoneyRange(nAmount))
@@ -2298,7 +2299,7 @@ void ThreadRPCServer2(void* parg)
     asio::ip::address bindAddress = mapArgs.count("-rpcallowip") ? asio::ip::address_v4::any() : asio::ip::address_v4::loopback();
 
     asio::io_service io_service;
-    ip::tcp::endpoint endpoint(bindAddress, GetArg("-rpcport", 8332));
+    ip::tcp::endpoint endpoint(bindAddress, GetArg("-rpcport", 52332));
     ip::tcp::acceptor acceptor(io_service, endpoint);
 
     acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
@@ -2472,13 +2473,13 @@ Object CallRPC(const string& strMethod, const Array& params)
     SSLStream sslStream(io_service, context);
     SSLIOStreamDevice d(sslStream, fUseSSL);
     iostreams::stream<SSLIOStreamDevice> stream(d);
-    if (!d.connect(GetArg("-rpcconnect", "127.0.0.1"), GetArg("-rpcport", "8332")))
+    if (!d.connect(GetArg("-rpcconnect", "127.0.0.1"), GetArg("-rpcport", "52332")))
         throw runtime_error("couldn't connect to server");
 #else
     if (fUseSSL)
         throw runtime_error("-rpcssl=1, but devcoin compiled without full openssl libraries.");
 
-    ip::tcp::iostream stream(GetArg("-rpcconnect", "127.0.0.1"), GetArg("-rpcport", "8332"));
+    ip::tcp::iostream stream(GetArg("-rpcconnect", "127.0.0.1"), GetArg("-rpcport", "52332"));
     if (stream.fail())
         throw runtime_error("couldn't connect to server");
 #endif
