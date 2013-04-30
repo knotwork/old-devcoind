@@ -1139,18 +1139,17 @@ void MapPort(bool fMapPort)
 
 
 
-
-
-
-
-
-
 static const char *strDNSSeed[] = {
-"ec2-107-20-209-11.compute-1.amazonaws.com",	// 107.20.209.11:52333
-"ec2-107-20-228-112.compute-1.amazonaws.com",	// 107.20.209.112:52333
-"ec2-50-19-210-139.compute-1.amazonaws.com",	// 50.19.210.139:52333
-"sworm.no-ip.com",
-"crossciv.no-ip.org",
+"dvcstable01.devcoin.org",	// 198.154.60.183:52333
+"dvcstable02.devcoin.org",	// 198.154.60.61:52333
+"dvcstable03.devcoin.org",	// 108.61.57.117:52333
+"dvcstable04.devcoin.org",	// 5.9.233.104:52333
+"dvcstable05.devcoin.org",	// ??? Need this one ???
+"dvcstable01.devtome.com",	// 198.154.60.183:52333
+"dvcstable02.devtome.com",	// 198.154.60.61:52333
+"dvcstable03.devtome.com",	// 108.61.57.117:52333
+"dvcstable04.devtome.com",	// 5.9.233.104:52333
+"dvcstable05.devtome.com",	// ??? Need this one ???
 };
 
 void DNSAddressSeed()
@@ -1185,10 +1184,9 @@ void DNSAddressSeed()
 
 unsigned int pnSeed[] =
 {
-//    0x1ddb1032, 0x6242ce40, 0x52d6a445, 0x2dd7a445, 0x8a53cd47, 0x73263750, 0xda23c257, 0xecd4ed57,
-//    0x0a40ec59, 0x75dce160, 0x7df76791, 0x89370bad, 0xa4f214ad, 0x767700ae, 0x638b0418, 0x868a1018,
+//	3074202310, 1027381958, 1966685547, 1760102661,
+	0xb73c9ac6, 0x3d3c9ac6, 0x75393d6c, 0x68e90905,
 };
-
 
 
 void ThreadOpenConnections(void* parg)
